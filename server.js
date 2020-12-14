@@ -6,7 +6,6 @@ const express_enforces_ssl = require('express-enforces-ssl');
 const port = process.env.PORT || 3000;
 const dev = process.env.NODE_ENV !== 'production';
 const app = next({ dev });
-const handle = app.getRequestHandler();
 
 app.prepare().then(() => {
   const server = express();
@@ -17,7 +16,7 @@ app.prepare().then(() => {
   server.use(express_enforces_ssl());
 
   server.all('*', (req, res) => {
-    return handle(req, res);
+    app.render(req, res)
   });
 
   http.createServer(app).listen(port, function() {
