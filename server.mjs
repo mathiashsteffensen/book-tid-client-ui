@@ -1,4 +1,4 @@
-const next = require('next');
+import next from 'next';
 import sslRedirect from 'heroku-ssl-redirect';
 import express from 'express';
 
