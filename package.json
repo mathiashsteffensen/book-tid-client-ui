@@ -3,21 +3,20 @@
   "version": "1.0.0",
   "author": "",
   "license": "MIT",
-  "cacheDirectories": [".next/cache"],
+  "cacheDirectories": [
+    ".next/cache"
+  ],
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "pm2-runtime start ecosystem.config.js --env production"
+    "start": "next start -p $PORT"
   },
   "dependencies": {
     "axios": "^0.21.0",
     "bootstrap": "^4.4.1",
     "dayjs": "^1.9.7",
-    "express": "^4.17.1",
-    "express-enforces-ssl": "^1.1.0",
     "mongoose": "^5.9.13",
     "next": "^10.0.3",
-    "pm2": "^4.5.0",
     "react": "^16.13.1",
     "react-bootstrap": "^1.0.1",
     "react-datepicker": "^3.3.0",
