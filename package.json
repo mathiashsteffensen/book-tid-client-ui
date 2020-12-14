@@ -6,14 +6,17 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start -p $PORT"
+    "start": "pm2-runtime start ecosystem.config.js --env production"
   },
   "dependencies": {
     "axios": "^0.21.0",
     "bootstrap": "^4.4.1",
     "dayjs": "^1.9.7",
+    "express": "^4.17.1",
+    "heroku-ssl-redirect": "^0.1.1",
     "mongoose": "^5.9.13",
     "next": "^10.0.3",
+    "pm2": "^4.5.0",
     "react": "^16.13.1",
     "react-bootstrap": "^1.0.1",
     "react-datepicker": "^3.3.0",
