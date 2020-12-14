@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "author": "",
   "license": "MIT",
+  "cacheDirectories": [".next/cache"],
   "scripts": {
     "dev": "next dev",
     "build": "next build",

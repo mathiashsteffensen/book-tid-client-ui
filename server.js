@@ -15,7 +15,7 @@ app.prepare().then(() => {
  
   server.use(express_enforces_ssl());
 
-  server.all('*', (req, res) => {
+  server.use((req, res) => {
     app.render(req, res)
   });
 
