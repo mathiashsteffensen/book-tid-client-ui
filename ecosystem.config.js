@@ -1,7 +1,7 @@
 module.exports = {
   apps : [{
     name: "BOOK-TID-API",
-    script: "./server.mjs",
+    script: "./server.js",
     instances: "max",
     env: {
       NODE_ENV: "development",
