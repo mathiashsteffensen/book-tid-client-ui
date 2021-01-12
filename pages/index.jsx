@@ -17,11 +17,11 @@ import SuccessText from '../components/SuccessText'
 import {
   fetchClosedDatesWithinAllowedPeriod, 
   fetchAvailableTimes, 
-  bookAppointment
+  bookAppointment,
+  getCatsAndServices,
+  getTheme
 } from '../requests'
 
-// Database imports
-import {getCatsAndServices} from '../db/queries'
 import ServiceSelect from '../components/ServiceSelect'
 
 export default function Home(props) 
@@ -349,15 +349,23 @@ export default function Home(props)
                     {successText}
             </Alert>
 
-            <Alert style={{fontSize: '0.8rem'}} className="mt-1 border border-warning" variant="warning">
+            <Alert style={{fontSize: '0.8rem'}} className="mt-2 border border-warning" variant="warning">
             <strong>EMAIL & SMS:</strong> Når du booker accepterer du at modtage bekræftelser på email.
               <br />
               <br />
-            <strong>AFBUD:</strong> Du finder et link til afbud i den bekræftelses e-mail du modtager når du har booket tid.
+            <strong>AFBUD:</strong> Du finder et link til afbud i den bekræftelses e-mail du modtager når du har booket tid. <p className="text-muted">(Hvis du ikke kan finde en E-Mail, check din SPAM mappe, ellers kontakt os på <a href="mailto:service@booktid.net">service@booktid.net</a>)</p>
             </Alert>
           </Col>
 
           <Col>
+
+            <Slider
+              title={title}
+              isOpen
+              disabled
+            >
+              <img style={{maxWidth: '200px'}} src={favicon} alt="logo"/>
+            </Slider>
 
           </Col>
         </Row>
@@ -370,19 +378,19 @@ export default function Home(props)
 export async function getServerSideProps({req})
 {
   const subdomain = req.headers.host.split('.')[0]
-
+  console.log(subdomain);
   try {
-    const theme = await axios.get('https://api.booktid.net/client/theme/' +  subdomain).then((res) => res.data)
+    const theme = await getTheme(subdomain)
 
-    const catsAndServices = await getCatsAndServices(theme.email)
-    console.log(theme)
+    const catsAndServices = await getCatsAndServices(subdomain)
+    console.log(theme, catsAndServices)
 
     return {
       props: {
         domainPrefix: subdomain,
-        title: theme.businessInfo.name + ' - Book Tid',
+        title: 'Book Tid | ' + theme.businessInfo.name,
         businessName: theme.businessInfo.name,
-        favicon: theme.pictureURLs[0],
+        favicon: 'logo-dark.svg',
         catsAndServices: JSON.parse(JSON.stringify(catsAndServices)),
         latestBookingBefore: theme.bookingSettings.latestBookingBefore,
         maxDaysBookAhead: theme.bookingSettings.maxDaysBookAhead,
@@ -393,13 +401,16 @@ export async function getServerSideProps({req})
     }
   } catch (err)
   {
-    console.log(err.message)
+    if (err.response && err.response.status === 404) return {
+      redirect: {
+        permanent: false,
+        destination: '/404'
+      }
+    }
     return {
       props: {
         error: err.message
       }
     }
   }
-
-  
 }

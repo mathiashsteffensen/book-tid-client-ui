@@ -105,6 +105,13 @@ main {
   width: 100%;
 }
 
+.flex-center {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 @keyframes slideUp {
   from {
       max-height: 70rem;
